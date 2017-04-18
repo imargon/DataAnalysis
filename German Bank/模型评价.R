@@ -94,7 +94,8 @@ Affairs$ynaffair <-  factor(Affairs$ynaffair,levels=c(0,1), labels=c("No","Yes")
 
 #构建Logistics模型
 log_ml <- glm(ynaffair ~ gender + age + yearsmarried + children + religiousness + education + occupation + rating,data = Affairs,family = binomial())
-pred <- prediction(pre,Affairs$ynaffair)
+log_pre <- predict(log_ml,type="response")
+pred <- prediction(log_pre,Affairs$ynaffair)
 performance(pred,'auc')@y.values
 perf <- performance(pred,'tpr','fpr')
 plot(perf)
